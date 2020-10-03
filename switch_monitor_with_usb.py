@@ -34,7 +34,7 @@ if dev is None:
   sys.exit(1)
 
 # Retrieve the current VCP value
-getvcp = run([ args.ddcutil, '-n', args.serial, '--less-sleep', '--nousb', '-t', 'getvcp', '0x60' ], capture_output = True, text = True)
+getvcp = run([ args.ddcutil, '-n', args.serial, '--nousb', '-t', 'getvcp', '0x60' ], capture_output = True, text = True)
 if getvcp.returncode != 0:
   print(f'Failed to retrieve VCP {INPUT_VCP} for monitor with serial number {args.serial}', file = sys.stderr)
   print(args.ddcutil + ': ' + getvcp.stderr, file = sys.stderr)
@@ -42,7 +42,7 @@ if getvcp.returncode != 0:
 
 # Set the VCP value if it is different to the current value
 if getvcp.stdout.split()[3] != args.input:
-  setvcp = run([ args.ddcutil, '-n', args.serial, '--less-sleep', '--nousb', 'setvcp', INPUT_VCP, args.input ], capture_output = True, text = True)
+  setvcp = run([ args.ddcutil, '-n', args.serial, '--nousb', 'setvcp', INPUT_VCP, args.input ], capture_output = True, text = True)
   if setvcp.returncode != 0:
     print(f'Failed to set VCP {INPUT_VCP} to {args.input} for monitor with serial number {args.serial}', file = sys.stderr)
     print(args.ddcutil + ': ' + setvcp.stderr, file = sys.stderr)
